@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Game - Săn Vé Máy Bay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center font-sans">
+    <div id="app" class="w-full max-w-md bg-white shadow-xl rounded-2xl p-6 m-4">
+        <div id="login-screen" class="space-y-4">
+            <h1 class="text-2xl font-bold text-center text-blue-600">🌍 Săn Vé Du Lịch</h1>
+            <p class="text-sm text-center text-gray-500">Đăng nhập để chơi game và nhận ưu đãi vé máy bay!</p>
+            <input type="email" id="email" placeholder="Nhập email của bạn..." class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="handleLogin()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Đăng Nhập / Vào Game</button>
+        </div>
+        <div id="game-lobby" class="hidden space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <div>
+                    <p class="text-xs text-gray-400">Xin chào,</p>
+                    <span id="user-email-display" class="font-semibold text-gray-700">user@email.com</span>
+                </div>
+                <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                    🪙 <span id="user-coins">100</span> Xu
+                </div>
+            </div>
+            <div class="bg-blue-50 p-4 rounded-xl text-center space-y-2">
+                <h2 class="font-bold text-blue-800">Thử Thách Hôm Nay</h2>
+                <p class="text-sm text-gray-600">Trả lời đúng câu hỏi du lịch để nhận thêm 50 xu!</p>
+                <button onclick="startQuiz()" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">Bắt Đầu Chơi</button>
+            </div>
+            <button onclick="handleLogout()" class="w-full text-red-500 text-sm pt-4 hover:underline">Đăng xuất</button>
+        </div>
+        <div id="quiz-screen" class="hidden space-y-4">
+            <h2 class="font-bold text-lg text-gray-800">🧠 Đố Vui Du Lịch</h2>
+            <p id="question-text" class="text-sm text-gray-600 font-medium">Thủ đô của Nhật Bản là gì?</p>
+            <div class="space-y-2" id="answers-container">
+                <button onclick="checkAnswer(false)" class="w-full text-left px-4 py-2 border rounded-lg hover:bg-gray-100">A. Seoul</button>
+                <button onclick="checkAnswer(true)" class="w-full text-left px-4 py-2 border rounded-lg hover:bg-gray-100">B. Tokyo</button>
+                <button onclick="checkAnswer(false)" class="w-full text-left px-4 py-2 border rounded-lg hover:bg-gray-100">C. Bangkok</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentCoins = 100;
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            if(!email) { alert('Vui lòng nhập email!'); return; }
+            document.getElementById('user-email-display').innerText = email;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('game-lobby').classList.remove('hidden');
+        }
+        function handleLogout() {
+            document.getElementById('game-lobby').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+        }
+        function startQuiz() {
+            document.getElementById('game-lobby').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+        }
+        function checkAnswer(isCorrect) {
+            if(isCorrect) {
+                alert('Chính xác! Bạn nhận được +50 xu 🎉');
+                currentCoins += 50;
+                document.getElementById('user-coins').innerText = currentCoins;
+            } else {
+                alert('Sai mất rồi! Thử lại vào lần sau nhé.');
+            }
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('game-lobby').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
